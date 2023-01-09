@@ -1,7 +1,14 @@
 import * as React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-import { Table, TableBody, TableCell, TableRow, Typography, Button } from "@material-ui/core";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+  Button,
+} from "@material-ui/core";
 import { hexToNumber } from "@etclabscore/eserialize";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -20,6 +27,10 @@ function TxView(props: ITxViewProps) {
   if (!tx) {
     return null;
   }
+  let input = tx.input;
+  if (input.length > 103) {
+    input = `${input.substring(0, 100)}...`;
+  }
 
   return (
     <div>
@@ -28,7 +39,9 @@ function TxView(props: ITxViewProps) {
           history.push(`/tx/${tx.hash}/raw`);
         }}
         style={{ position: "absolute", right: "10px", top: "75px" }}
-      >View Raw</Button>
+      >
+        View Raw
+      </Button>
       <Typography variant="h6">Transaction</Typography>
       <Table>
         <TableBody>
@@ -41,11 +54,21 @@ function TxView(props: ITxViewProps) {
             <TableCell>{t("Block")}</TableCell>
             <TableCell>
               <Link
-                component={({ className, children }: { children: any, className: string }) => (
-                  <RouterLink className={className} to={`/block/${tx.blockHash}`} >
+                component={({
+                  className,
+                  children,
+                }: {
+                  children: any;
+                  className: string;
+                }) => (
+                  <RouterLink
+                    className={className}
+                    to={`/block/${tx.blockHash}`}
+                  >
                     {children}
                   </RouterLink>
-                )}>
+                )}
+              >
                 {tx.blockHash}
               </Link>
             </TableCell>
@@ -75,11 +98,18 @@ function TxView(props: ITxViewProps) {
             <TableCell>{t("From")}</TableCell>
             <TableCell>
               <Link
-                component={({ className, children }: { children: any, className: string }) => (
-                  <RouterLink className={className} to={`/address/${tx.from}`} >
+                component={({
+                  className,
+                  children,
+                }: {
+                  children: any;
+                  className: string;
+                }) => (
+                  <RouterLink className={className} to={`/address/${tx.from}`}>
                     {children}
                   </RouterLink>
-                )}>
+                )}
+              >
                 {tx.from}
               </Link>
             </TableCell>
@@ -88,17 +118,23 @@ function TxView(props: ITxViewProps) {
           <TableRow>
             <TableCell>{t("To")}</TableCell>
             <TableCell>
-              {tx.to !== null ?
+              {tx.to !== null ? (
                 <Link
-                  component={({ className, children }: { children: any, className: string }) => (
-                    <RouterLink className={className} to={`/address/${tx.to}`} >
+                  component={({
+                    className,
+                    children,
+                  }: {
+                    children: any;
+                    className: string;
+                  }) => (
+                    <RouterLink className={className} to={`/address/${tx.to}`}>
                       {children}
                     </RouterLink>
-                  )}>
+                  )}
+                >
                   {tx.to}
                 </Link>
-                : null
-              }
+              ) : null}
             </TableCell>
           </TableRow>
 
@@ -114,7 +150,7 @@ function TxView(props: ITxViewProps) {
 
           <TableRow>
             <TableCell>{t("Input")}</TableCell>
-            <TableCell>{tx.input}</TableCell>
+            <TableCell>{input}</TableCell>
           </TableRow>
 
           <TableRow>
@@ -136,7 +172,7 @@ function TxView(props: ITxViewProps) {
 
       <br />
       <Typography variant="h6">Receipt</Typography>
-      {receipt &&
+      {receipt && (
         <Table>
           <TableBody>
             <TableRow>
@@ -148,11 +184,21 @@ function TxView(props: ITxViewProps) {
               <TableCell>{t("Block")}</TableCell>
               <TableCell>
                 <Link
-                  component={({ className, children }: { children: any, className: string }) => (
-                    <RouterLink className={className} to={`/block/${receipt.blockHash}`} >
+                  component={({
+                    className,
+                    children,
+                  }: {
+                    children: any;
+                    className: string;
+                  }) => (
+                    <RouterLink
+                      className={className}
+                      to={`/block/${receipt.blockHash}`}
+                    >
                       {children}
                     </RouterLink>
-                  )}>
+                  )}
+                >
                   {receipt.blockHash}
                 </Link>
               </TableCell>
@@ -182,11 +228,21 @@ function TxView(props: ITxViewProps) {
               <TableCell>{t("From")}</TableCell>
               <TableCell>
                 <Link
-                  component={({ className, children }: { children: any, className: string }) => (
-                    <RouterLink className={className} to={`/address/${receipt.from}`} >
+                  component={({
+                    className,
+                    children,
+                  }: {
+                    children: any;
+                    className: string;
+                  }) => (
+                    <RouterLink
+                      className={className}
+                      to={`/address/${receipt.from}`}
+                    >
                       {children}
                     </RouterLink>
-                  )}>
+                  )}
+                >
                   {receipt.from}
                 </Link>
               </TableCell>
@@ -196,11 +252,21 @@ function TxView(props: ITxViewProps) {
               <TableCell>{t("To")}</TableCell>
               <TableCell>
                 <Link
-                  component={({ className, children }: { children: any, className: string }) => (
-                    <RouterLink className={className} to={`/address/${receipt.to}`} >
+                  component={({
+                    className,
+                    children,
+                  }: {
+                    children: any;
+                    className: string;
+                  }) => (
+                    <RouterLink
+                      className={className}
+                      to={`/address/${receipt.to}`}
+                    >
                       {children}
                     </RouterLink>
-                  )}>
+                  )}
+                >
                   {receipt.to}
                 </Link>
               </TableCell>
@@ -210,11 +276,21 @@ function TxView(props: ITxViewProps) {
               <TableCell>{t("Contract Address")}</TableCell>
               <TableCell>
                 <Link
-                  component={({ className, children }: { children: any, className: string }) => (
-                    <RouterLink className={className} to={`/address/${receipt.contractAddress}`} >
+                  component={({
+                    className,
+                    children,
+                  }: {
+                    children: any;
+                    className: string;
+                  }) => (
+                    <RouterLink
+                      className={className}
+                      to={`/address/${receipt.contractAddress}`}
+                    >
                       {children}
                     </RouterLink>
-                  )}>
+                  )}
+                >
                   {receipt.contractAddress}
                 </Link>
               </TableCell>
@@ -232,13 +308,11 @@ function TxView(props: ITxViewProps) {
 
             <TableRow>
               <TableCell>{t("Receipt Logs")}</TableCell>
-              <TableCell>
-                {receipt.logs.length}
-              </TableCell>
+              <TableCell>{receipt.logs.length}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
-      }
+      )}
     </div>
   );
 }
